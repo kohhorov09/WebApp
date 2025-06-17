@@ -1,0 +1,6 @@
+@media screen and (max-width: 500px) {
+  .skin_grid {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+  }
+}

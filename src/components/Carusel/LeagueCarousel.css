@@ -1,0 +1,218 @@
+.carousel-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.league-title {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.league-description {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.trophy-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.trophy-image {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+
+.nav-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.nav-button:disabled {
+  color: #555;
+  cursor: not-allowed;
+}
+
+.nav-button:hover:not(:disabled) {
+  color: #fff;
+}
+
+.progress-bar-container {
+  width: 100%;
+  max-width: 300px;
+  height: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #4caf50; /* yashil */
+  transition: width 0.3s ease-in-out;
+}
+
+.league-progress {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+}
+
+.reward-image {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 100px;
+  animation: popIn 0.5s ease-out forwards;
+  z-index: 10;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.carousel-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 16px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.league-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.league-description {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: #555;
+}
+
+.trophy-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.nav-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  padding: 8px;
+}
+
+.nav-button:disabled {
+  color: #555;
+  cursor: not-allowed;
+}
+
+.trophy-image {
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+}
+
+.reward-image {
+  width: 80px;
+  height: auto;
+  margin-top: 12px;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.progress-bar-container {
+  border-radius: 20px;
+  height: 16px;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.progress-bar-fill {
+  background-color: #4caf50;
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+}
+
+.league-progress {
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* 📱 Mobilga moslashuv */
+@media (max-width: 480px) {
+  .carousel-container {
+    padding: 12px;
+    max-width: 100%;
+  }
+
+  .league-title {
+    font-size: 1.3rem;
+  }
+
+  .league-description {
+    font-size: 0.95rem;
+  }
+
+  .trophy-image {
+    width: 100px;
+  }
+
+  .reward-image {
+    width: 60px;
+  }
+
+  .nav-button {
+    padding: 4px;
+  }
+
+  .progress-bar-container {
+    height: 12px;
+  }
+
+  .league-progress {
+    font-size: 0.9rem;
+  }
+}
