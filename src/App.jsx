@@ -9,7 +9,9 @@ import AccountPage from "./components/Accaunt";
 
 function App() {
   const [chatId, setChatId] = useState(null);
-  const [userData, setUserData] = useState({}); // { [chatId]: {coins, upgrades, etc} }
+  const [userData, setUserData] = useState({});
+  const [missions, setMissions] = useState([]);
+  const [subscribed, setSubscribed] = useState(false); // optional for account logic
 
   const defaultState = {
     coins: 0,
@@ -25,30 +27,47 @@ function App() {
     selectedSkin: "default",
   };
 
-  // ✅ Chat ID olish (Telegram WebApp orqali)
+  // ✅ Telegram WebApp’dan chatId olish va localStorage’dan user ma'lumotlarini olish
   useEffect(() => {
-    if (window.Telegram?.WebApp?.initDataUnsafe?.user?.id) {
-      const id = window.Telegram.WebApp.initDataUnsafe.user.id.toString();
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.ready();
+    }
+
+    const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
+    if (user?.id) {
+      const id = user.id.toString();
       setChatId(id);
 
-      // ChatId asosida localStorage dan o‘qish
-      const saved = localStorage.getItem("user_" + id);
-      if (saved) {
-        setUserData(JSON.parse(saved));
+      const savedData = localStorage.getItem("user_" + id);
+      if (savedData) {
+        setUserData(JSON.parse(savedData));
       } else {
         setUserData({ [id]: defaultState });
       }
     }
   }, []);
 
-  // ✅ Har safar userData o‘zgarsa localStorage ga yoziladi
+  // ✅ userData o‘zgarganda localStorage ga yozish
   useEffect(() => {
     if (chatId) {
       localStorage.setItem("user_" + chatId, JSON.stringify(userData));
     }
   }, [userData, chatId]);
 
-  // 🔄 Har bir field uchun getter/setter
+  // ✅ Missiyalarni json-server dan olish
+  useEffect(() => {
+    fetch("http://localhost:9090/missions")
+      .then((res) => res.json())
+      .then((data) => setMissions(data))
+      .catch((err) => console.error("Missions fetch error:", err));
+  }, []);
+
+  // ✅ Field getter va setter
+  const getField = (field) => {
+    if (!userData[chatId]) return defaultState[field];
+    return userData[chatId][field] ?? defaultState[field];
+  };
+
   const updateField = (field, value) => {
     setUserData((prev) => ({
       ...prev,
@@ -58,8 +77,6 @@ function App() {
       },
     }));
   };
-
-  const getField = (field) => userData[chatId]?.[field] ?? defaultState[field];
 
   if (!chatId) return <div>⏳ Telegram orqali yuklanmoqda...</div>;
 
@@ -113,8 +130,18 @@ function App() {
             />
           }
         />
-        <Route path="/missions" element={<Missions />} />
-        <Route path="/accaunt" element={<AccountPage />} />
+        <Route path="/missions" element={<Missions missions={missions} />} />
+        <Route
+          path="/accaunt"
+          element={
+            <AccountPage
+              missions={missions}
+              setMissions={setMissions}
+              subscribed={subscribed}
+              setSubscribed={setSubscribed}
+            />
+          }
+        />
       </Routes>
     </Router>
   );
